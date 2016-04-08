@@ -1,6 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 import tomlpython
 from time import sleep
 
@@ -25,7 +28,7 @@ def validate(conf=None,testcaseName=None,driver=None):
                 frameaction = driver.find_element_by_xpath('//frame[@name="action"]')
                 driver.switch_to_frame(frame)
                 inputElement = driver.find_element_by_link_text('Wireless').click()
-                sleep(2)
+                sleep(5)
 
                 driver.switch_to.window(driver.window_handles[0])
                 driver.switch_to_frame(frame2)
@@ -58,6 +61,7 @@ def validate(conf=None,testcaseName=None,driver=None):
 				        alert.accept()
 	                        except:
 	                    		pass
+                                sleep(5)
                                 if "testFlag" not in locals().keys() or not testFlag:
 		                    inputElement = driver.find_element_by_id('wirelessSSID0')
 		                    inputElement.clear()
@@ -68,15 +72,9 @@ def validate(conf=None,testcaseName=None,driver=None):
 	                            ##########################################################################	                    
 		                    #inputElement = driver.find_element_by_css_selector("input[type='radio'][id='idbroadcastSSID1']").click()
 		                    ##########################################################################
-		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                    [\'wlanSettingTable\'][\'wlan0\'][\'channel\']"]/option[text()="%s"]'\
-                                    %f('CHANNEL',conf[testcaseName],"Auto")).click()
-		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                    [\'wlanSettingTable\'][\'wlan0\'][\'dataRate\']"]/option[text()="%s"]'\
-                                    %f('DATARATE',conf[testcaseName],"Best")).click()
-		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                    [\'wlanSettingTable\'][\'wlan0\'][\'txPower\']"]/option[text()="%s"]'\
-                                    %f('TXPOWER',conf[testcaseName],"Full")).click()
+		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'channel\']"]/option[text()="%s"]'%f('CHANNEL',conf[testcaseName],"Auto")).click()
+		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'dataRate\']"]/option[text()="%s"]'%f('DATARATE',conf[testcaseName],"Best")).click()
+		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'txPower\']"]/option[text()="%s"]'%f('TXPOWER',conf[testcaseName],"Full")).click()
 
 	                elif conf[testcaseName]['WIRELESSMODE'] == "11bg":
 	                        inputElement = driver.find_element_by_css_selector("input[type='radio'][value='1']").click()
@@ -94,6 +92,7 @@ def validate(conf=None,testcaseName=None,driver=None):
 					alert.accept()
 	                    	except:
 	                    	        pass
+                                sleep(5)
 	                        if "testFlag" not in locals().keys() or not testFlag:
 		                    inputElement = driver.find_element_by_id('wirelessSSID0')
 		                    inputElement.clear()
@@ -104,15 +103,9 @@ def validate(conf=None,testcaseName=None,driver=None):
 	                            ##########################################################################	                    
 		                    #inputElement = driver.find_element_by_css_selector("input[type='radio'][id='idbroadcastSSID1']").click()
 		                    ##########################################################################
-		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                    [\'wlanSettingTable\'][\'wlan0\'][\'channel\']"]/option[text()="%s"]'\
-                                    %f('CHANNEL',conf[testcaseName],"Auto")).click()
-		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                    [\'wlanSettingTable\'][\'wlan0\'][\'dataRate\']"]/option[text()="%s"]'\
-                                    %f('DATARATE',conf[testcaseName],"Best")).click()
-		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                    [\'wlanSettingTable\'][\'wlan0\'][\'txPower\']"]/option[text()="%s"]'\
-                                    %f('TXPOWER',conf[testcaseName],"Full")).click()
+		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'channel\']"]/option[text()="%s"]'%f('CHANNEL',conf[testcaseName],"Auto")).click()
+		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'dataRate\']"]/option[text()="%s"]'%f('DATARATE',conf[testcaseName],"Best")).click()
+		                    inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'txPower\']"]/option[text()="%s"]'%f('TXPOWER',conf[testcaseName],"Full")).click()
 	                elif conf[testcaseName]['WIRELESSMODE'] == "11ng":
 			        inputElement = driver.find_element_by_css_selector("input[type='radio'][value='2']").click()
 			        if conf[testcaseName]['TURN_RADIO_ON']=="1": 
@@ -132,30 +125,21 @@ def validate(conf=None,testcaseName=None,driver=None):
 			                #Filling configuration details
 			                inputElement = driver.find_element_by_id('wirelessSSID0')
 			                inputElement.clear()
-			                inputElement.send_keys('%s'%f('SSID_NAME',conf[testcaseName],"NETGEAR_11na"))
+			                inputElement.send_keys('%s'%f('SSID_NAME',conf[testcaseName],"NETGEAR"))
 			                if 'BROADCAST' in conf[testcaseName].keys() and conf[testcaseName]['BROADCAST'] == '0':
 			                	inputElement = driver.find_element_by_css_selector\
                                                 ("input[type='radio'][id='idbroadcastSSID1'][value='1']").click()
 			                else:
 			                	inputElement = driver.find_element_by_css_selector\
                                                 ("input[type='radio'][id='idbroadcastSSID1'][value='0']").click()
-			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan0\'][\'channel\']"]/option[text()="%s"]'\
-                                        %f('CHANNEL',conf[testcaseName],"Auto")).click()
-			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan0\'][\'mcsRate\']"]/option[text()="%s"]'\
-                                        %f('MSCRATE',conf[testcaseName],"Best")).click()
-			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan0\'][\'channelWidth\']"]/option[text()="%s"]'\
-                                        %f('CHANNELWIDHT',conf[testcaseName],"Dynamic 20/40 MHz")).click()
-			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan0\'][\'guardInterval\']"]/option[text()="%s"]'\
-                                        %f('GUARDINTERVAL',conf[testcaseName],"Auto")).click()
-			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan0\'][\'txPower\']"]/option[text()="%s"]'\
-                                        %f('TXPOWER',conf[testcaseName],"Full")).click()
+                                        
+			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'channel\']"]/option[text()="%s"]'%f('CHANNEL',conf[testcaseName],"Auto")).click()
+			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'mcsRate\']"]/option[text()="%s"]'%f('MSCRATE',conf[testcaseName],"Best")).click()
+			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'channelWidth\']"]/option[text()="%s"]'%f('CHANNELWIDHT',conf[testcaseName],"Dynamic 20/40 MHz")).click()
+			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'guardInterval\']"]/option[text()="%s"]'%f('GUARDINTERVAL',conf[testcaseName],"Auto")).click()
+			                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan0\'][\'txPower\']"]/option[text()="%s"]'%f('TXPOWER',conf[testcaseName],"Full")).click()
 		                
-                                sleep(9)   
+                                   
                 if conf[testcaseName]['PROTOCOL'] == "802.11a/na":
                         inputElement = driver.find_element_by_xpath('//li[@currentid="2"]').click()
                         if conf[testcaseName]['WIRELESSMODE'] == '11na':
@@ -173,6 +157,7 @@ def validate(conf=None,testcaseName=None,driver=None):
                                         alert.accept()
                                 except:
                                         pass
+                                sleep(5)
                                 if "testFlag" not in locals().keys() or not testFlag:
 					        # click on the link that opens a new window
 	                                inputElement = driver.find_element_by_id('wirelessSSID1')
@@ -184,24 +169,24 @@ def validate(conf=None,testcaseName=None,driver=None):
 	                                #action = webdriver.ActionChains(driver)
 	                                #action.move_to_element(driver.find_element_by_class_name('spacer5Percent'))
 	                                #action.context_click()
+                                        
+                                    #    driver.switch_to.window(driver.window_handles[0])
+	                                #frame = driver.find_element_by_xpath('//frame[@name="master"]')
+    	                            #    driver.switch_to_frame(frame)
+                                    #    action = webdriver.ActionChains(driver)
+                                    #    action.move_to_element(driver.find_element_by_class_name('spacer5Percent'))
+                                    #    action.perform()
+                                    #    if 'BROADCAST' in conf[testcaseName].keys() and conf[testcaseName]['BROADCAST'] == '0':
+                                    #            inputElement = driver.find_element_by_css_selector("input[type='radio'][id='idbroadcastSSID1'][value='1']").click()
+                                    #    else:
+                                    #            inputElement = driver.find_element_by_css_selector("input[type='radio'][id='idbroadcastSSID1'][value='0']").click()
 	                                ##########################################################################
-	                                inputElement = driver.find_element_by_xpath('//input[@name="system[\'vapSettings\']\
-                                        [\'vapSettingTable\'][\'wlan1\'][\'vap0\'][\'hideNetworkName\']"]').click()
-	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan1\'][\'channel\']"]/option[text()="%s"]'\
-                                        %f('CHANNEL',conf[testcaseName],"Auto")).click()
-	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan1\'][\'mcsRate\']"]/option[text()="%s"]'\
-                                        %f('MSCRATE',conf[testcaseName],"Best")).click()
-	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan1\'][\'channelWidth\']"]/option[text()="%s"]'\
-                                        %f('CHANNELWIDHT',conf[testcaseName],"Dynamic 20/40 MHz")).click()
-	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan1\'][\'guardInterval\']"]/option[text()="%s"]'\
-                                        %f('GUARDINTERVAL',conf[testcaseName],"Auto")).click()
-	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan1\'][\'txPower\']"]/option[text()="%s"]'\
-                                        %f('TXPOWER',conf[testcaseName],"Full")).click()
+	                                inputElement = driver.find_element_by_xpath('//input[@name="system[\'vapSettings\'][\'vapSettingTable\'][\'wlan1\'][\'vap0\'][\'hideNetworkName\']"]').click()
+	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan1\'][\'channel\']"]/option[text()="%s"]'%f('CHANNEL',conf[testcaseName],"Auto")).click()
+	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan1\'][\'mcsRate\']"]/option[text()="%s"]'%f('MSCRATE',conf[testcaseName],"Best")).click()
+	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan1\'][\'channelWidth\']"]/option[text()="%s"]'%f('CHANNELWIDHT',conf[testcaseName],"Dynamic 20/40 MHz")).click()
+	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan1\'][\'guardInterval\']"]/option[text()="%s"]'%f('GUARDINTERVAL',conf[testcaseName],"Auto")).click()
+	                                inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan1\'][\'txPower\']"]/option[text()="%s"]'%f('TXPOWER',conf[testcaseName],"Full")).click()
                         elif conf[testcaseName]['WIRELESSMODE']== '11a':
                                 inputElement = driver.find_element_by_css_selector("input[type='radio'][value='3']").click()
                                 if conf[testcaseName]['TURN_RADIO_ON']=="1":
@@ -219,6 +204,7 @@ def validate(conf=None,testcaseName=None,driver=None):
 			                alert.accept()
                                 except:
                     	                pass
+                                sleep(5)
                                 if "testFlag" not in locals().keys() or not testFlag:
                                         inputElement = driver.find_element_by_id('wirelessSSID1')
                                         inputElement.clear()
@@ -245,15 +231,9 @@ def validate(conf=None,testcaseName=None,driver=None):
 
 					###########################################################################
 
-                                        inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan1\'][\'channel\']"]/option[text()="%s"]'\
-                                        %f('CHANNEL',conf[testcaseName],"Auto")).click()
-                                        inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan1\'][\'dataRate\']"]/option[text()="%s"]'\
-                                        %f('DATARATE',conf[testcaseName],"Best")).click()
-                                        inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\']\
-                                        [\'wlanSettingTable\'][\'wlan1\'][\'txPower\']"]/option[text()="%s"]'\
-                                        %f('TXPOWER',conf[testcaseName],"Full")).click()
+                                        inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan1\'][\'channel\']"]/option[text()="%s"]'%f('CHANNEL',conf[testcaseName],"Auto")).click()
+                                        inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan1\'][\'dataRate\']"]/option[text()="%s"]'%f('DATARATE',conf[testcaseName],"Best")).click()
+                                        inputElement = driver.find_element_by_xpath('//select[@name="system[\'wlanSettings\'][\'wlanSettingTable\'][\'wlan1\'][\'txPower\']"]/option[text()="%s"]'%f('TXPOWER',conf[testcaseName],"Full")).click()
 
 
 
@@ -264,8 +244,12 @@ def validate(conf=None,testcaseName=None,driver=None):
                 driver.switch_to_frame(frameaction)
                 inputElement=driver.find_element_by_id('applyButton').click()
 
-                sleep(10)
-                #apply button clicked
+                
+                driver.switch_to.window(driver.window_handles[0])
+	        frame = driver.find_element_by_xpath('//frame[@name="master"]')
+    	        driver.switch_to_frame(frame)
+                wait = WebDriverWait(driver, 10)
+                wait.until(EC.presence_of_element_located((By.ID,'inlineTabLink1')))
         except Exception as e:
                 raise Exception(e)
 
